@@ -39,8 +39,12 @@ bot.onText(/\/account (.+)/, async (msg, match) => {
 });
 
 const screenshotAccount = async (name) => {
-  // const name = process.argv[2];
-  const browser = await puppeteer.launch();
+  const chromeOptions = {
+    headless: true,
+    defaultViewport: null,
+    args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
+  };
+  const browser = await puppeteer.launch(chromeOptions);
   const page = await browser.newPage();
   await page.setViewport({ width: 1366, height: 768 });
   await page.goto(`https://github.com/${name}`);
