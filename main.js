@@ -3,6 +3,12 @@ const fs = require("fs");
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const token = process.env.TELEGRAM_BOT_TOKEN;
+const express = require("express");
+const app = express();
+
+app.use(express.json());
+
+const PORT = process.env.PORT || 5000;
 
 let bot;
 
@@ -54,7 +60,13 @@ const screenshotAccount = async (name) => {
     path: "logo.png",
     clip: { x: x, y: y - 50, width: w + 20, height: h + 20 },
   });
-  //   await element.screenshot({ path: "example.png" });
 
   await browser.close();
 };
+
+app.listen(PORT);
+
+app.post("/" + bot.token, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
