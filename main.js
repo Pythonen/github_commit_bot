@@ -19,6 +19,14 @@ if (process.env.NODE_ENV === "production") {
   bot = new TelegramBot(token, { polling: true });
 }
 
+bot.onText(RegExp("/start"), (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(
+    chatId,
+    "To use this bot, simply write '/account' followed by the github account.\nFor example /account Pythonen"
+  );
+});
+
 bot.onText(RegExp("/help"), (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(
