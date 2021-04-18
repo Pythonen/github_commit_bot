@@ -39,10 +39,10 @@ bot.onText(/\/account (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const name = match[1];
   await screenshotAccount(name);
-  fs.readFile("logo.png", (err, data) => {
+  fs.readFile("screenshot.png", (err, data) => {
     if (err) throw err;
     bot.sendPhoto(chatId, data);
-    fs.unlinkSync("logo.png");
+    fs.unlinkSync("screenshot.png");
   });
 });
 
@@ -69,7 +69,7 @@ const screenshotAccount = async (name) => {
   const w = box["width"];
   const h = box["height"];
   await page.screenshot({
-    path: "logo.png",
+    path: "screenshot.png",
     clip: { x: x, y: y - 50, width: w + 20, height: h + 20 },
   });
 
